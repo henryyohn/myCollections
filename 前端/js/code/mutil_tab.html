@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="tab1">
+    <button @click="" style="background: red">按钮1</button>
+    <button @click="">按钮2</button>
+    <button @click="">按钮3</button>
+    <p>内容1</p>
+    <p style="display: none">内容2</p>
+    <p style="display: none">内容3</p>
+  </div>
+  <button id="nextB">下一页</button>
+
+  <div class="tab2">
+    <button @click="" style="background: red">按钮1</button>
+    <button @click="">按钮2</button>
+    <button @click="">按钮3</button>
+    <p>内容1</p>
+    <p style="display: none">内容2</p>
+    <p style="display: none">内容3</p>
+  </div>
+
+  <div class="tab3">
+    <button @click="" style="background: red">按钮1</button>
+    <button @click="">按钮2</button>
+    <button @click="">按钮3</button>
+    <p>内容1</p>
+    <p style="display: none">内容2</p>
+    <p style="display: none">内容3</p>
+  </div>
+</body>
+<script>
+  let cuentPage = 0
+  let cuentPage2 = 0
+
+  function handler(btns, ps, isNext = false, isAuto=false) {
+    btns.forEach((item, key) => {
+      item.onclick = function () {
+        cuentPage = key
+        psfor(key)
+      }
+    })
+    // 下一页
+    if (isNext) {
+      const nextBtn = document.querySelector('#nextB')
+      nextBtn.onclick = function () {
+        cuentPage < 2 ? cuentPage++ : (cuentPage = 0)
+        psfor(cuentPage)
+      }
+    }
+
+    // 自动轮播
+    if (isAuto) {
+
+      setInterval(() => {
+        cuentPage < 2 ? cuentPage++ : (cuentPage = 0)
+        psfor(cuentPage)
+      }, 1000)
+    }
+
+    function psfor(index) {
+      ps.forEach((item, key) => {
+          if (key == index) {
+            btns[key].style.background = 'red'
+            ps[key].style.display = ''
+          } else {
+            btns[key].style.background = ''
+            ps[key].style.display = 'none'
+          }
+        })
+    }
+
+  }
+
+  let btns1 = document.querySelectorAll('.tab1 button')
+  let ps1 = document.querySelectorAll('.tab1 p')
+  handler(btns1, ps1, true)
+
+  let btns2 = document.querySelectorAll('.tab2 button')
+  let ps2 = document.querySelectorAll('.tab2 p')
+  handler(btns2, ps2, false, true)
+
+  let btns3 = document.querySelectorAll('.tab3 button')
+  let ps3 = document.querySelectorAll('.tab3 p')
+  handler(btns3, ps3)
+
+
+</script>
+
+</html>

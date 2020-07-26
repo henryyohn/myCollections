@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  function Dad(height) {
+    this.height = height;
+    this.name = 'fooooo'
+    this.age = 20
+    this.money = '$90000000'
+  }
+
+  Dad.prototype.hobby = function () {
+    console.log('dad =====')
+  }
+
+  function Son(height) {
+    Dad.call(this, height) // 属性继承
+  }
+
+  //方法继承：：：用组合继承的方法
+  function Link() {}
+  Link.prototype = Dad.prototype
+  Son.prototype = new Link()
+  //  预定义属性constructor指回自己
+  Son.prototype.constructor = Son
+  
+  Son.prototype.hobby = function () {
+    console.log('son =====')
+  }
+  let sonnew = new Son(180)
+  
+  console.log(sonnew)
+
+  sonnew.hobby()
+
+  let D1 = new Dad(180)
+  D1.hobby()
+</script>
+</html>

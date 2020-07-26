@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="tab1">
+    <button @click="" style="background: red">按钮1</button>
+    <button @click="">按钮2</button>
+    <button @click="">按钮3</button>
+    <p>内容1</p>
+    <p style="display: none">内容2</p>
+    <p style="display: none">内容3</p>
+  </div>
+  <button id="nextB">下一页</button>
+
+  <div class="tab2">
+    <button @click="" style="background: red">按钮1</button>
+    <button @click="">按钮2</button>
+    <button @click="">按钮3</button>
+    <p>内容1</p>
+    <p style="display: none">内容2</p>
+    <p style="display: none">内容3</p>
+  </div>
+
+  <div class="tab3">
+    <button @click="" style="background: red">按钮1</button>
+    <button @click="">按钮2</button>
+    <button @click="">按钮3</button>
+    <p>内容1</p>
+    <p style="display: none">内容2</p>
+    <p style="display: none">内容3</p>
+  </div>
+</body>
+<script>
+  // let cuentPage = 0
+  // let cuentPage2 = 0
+
+  // function handler(btns, ps, isNext = false, isAuto = false) {
+  //   btns.forEach((item, key) => {
+  //     item.onclick = function () {
+  //       cuentPage = key
+  //       psfor(key)
+  //     }
+  //   })
+  //   // 下一页
+  //   if (isNext) {
+  //     const nextBtn = document.querySelector('#nextB')
+  //     nextBtn.onclick = function () {
+  //       cuentPage < 2 ? cuentPage++ : (cuentPage = 0)
+  //       psfor(cuentPage)
+  //     }
+  //   }
+
+  //   // 自动轮播
+  //   if (isAuto) {
+
+  //     setInterval(() => {
+  //       cuentPage < 2 ? cuentPage++ : (cuentPage = 0)
+  //       psfor(cuentPage)
+  //     }, 1000)
+  //   }
+
+  //   function psfor(index) {
+  //     ps.forEach((item, key) => {
+  //       if (key == index) {
+  //         btns[key].style.background = 'red'
+  //         ps[key].style.display = ''
+  //       } else {
+  //         btns[key].style.background = ''
+  //         ps[key].style.display = 'none'
+  //       }
+  //     })
+  //   }
+
+  // }
+
+  // let btns1 = document.querySelectorAll('.tab1 button')
+  // let ps1 = document.querySelectorAll('.tab1 p')
+  // handler(btns1, ps1, true)
+
+  // let btns2 = document.querySelectorAll('.tab2 button')
+  // let ps2 = document.querySelectorAll('.tab2 p')
+  // handler(btns2, ps2, false, true)
+
+  // let btns3 = document.querySelectorAll('.tab3 button')
+  // let ps3 = document.querySelectorAll('.tab3 p')
+  // handler(btns3, ps3)
+
+  // //工厂模式
+  // function Tab() {
+  //   //添加原料
+  //   let obj = {}
+  //   // 加工原料
+  //   obj.tabLength = 1
+  //   obj.psFor = function () {
+
+  //   }
+  //   // 出厂
+  //   return obj
+  // }
+
+  // // 工厂模式的问题：1、对象识别问题； 2、性能问题
+  // let tab1 = Tab()
+  // tab1.psFor()
+
+  // let tab2 = Tab()
+  // tab2.psFor()
+
+  //new Object()
+//   1、执行函数
+// 2、自动创建一个空对象
+// 3、把创建的对象指向另一个对象
+// 4、把控对象和函数里的this衔接起来
+// 5、隐式返还this
+
+
+// 原型优化工厂模式；简化工厂模式---->构造函数
+// 1、首字母大些
+// 2、属性放在构造函数里面，方法放在原型上
+function Tab() {
+  this.name = '张三'
+  // this.hobby = function () {
+  //   console.log('哈哈哈哈')
+  // }
+}
+
+// prototype 是对象的公共空间，每次new都是指向同一个
+Tab.prototype.psFor = function () {
+  console.log('ps for')
+}
+
+Tab.prototype.hobby = function () {
+    console.log('哈哈哈哈hobby')
+  }
+
+// let tab1 = new Tab()
+// console.log(tab1.name)
+// tab1.hobby()
+
+
+// 仿写new 
+function myNew(custructor, ...arg) {
+  let objc = {}
+  custructor.call(objc, ...arg)
+  objc.__proto__ = custructor.prototype
+  return objc
+}
+
+let tab0 = myNew(Tab)
+console.log(tab0)
+tab0.hobby()
+
+
+</script>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .mydiv1 {
+      background-color: red;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+    }
+
+    .mydiv2 {
+      background-color: blue;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 130px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mydiv1"></div>
+  <div class="mydiv2"></div>
+</body>
+<script>
+  let div1 = document.querySelector('.mydiv1');
+  let div2 = document.querySelector('.mydiv2');
+
+
+  // div1.onmousedown = function (e) {
+  //   let ev = e || window.event;
+  //   let x = ev.clientX - div1.offsetLeft;
+  //   let y = ev.clientY - div1.offsetTop;
+
+  //   div1.onmousemove = e => {
+  //     let ev = e || window.event;
+  //     let nx = ev.clientX - x;
+  //     let ny = ev.clientY - y;
+  //     div1.style.left = nx + 'px' 
+  //     div1.style.top = ny + 'px'
+  //     console.log(nx, ny)
+  //   }
+  //   div1.onmouseup = e => {
+  //     div1.onmousemove = ''
+  //   }
+  // }
+
+  //面向对象
+  function Drag(ele) {
+    this.ele = ele;
+    this.dowm();
+  }
+
+  Drag.prototype.dowm = function (e) {
+    this.ele.onmousedown = (e) => {
+      let ev = e || window.event;
+      let x = ev.clientX - this.ele.offsetLeft;
+      let y = ev.clientY - this.ele.offsetTop;
+      this.move(x, y);
+      this.up();
+    }
+  }
+
+  Drag.prototype.move = function (x, y) {
+    this.ele.onmousemove = e => {
+      let ev = e || window.event;
+      let nx = ev.clientX - x;
+      let ny = ev.clientY - y;
+      this.setStyle(nx, ny);
+    }
+  }
+
+  Drag.prototype.up = function (e) {
+    this.ele.onmouseup = e => {
+      this.ele.onmousemove = ''
+    }
+  }
+
+  Drag.prototype.setStyle = function(x,y) {
+    this.ele.style.left = x + 'px'
+    this.ele.style.top = y + 'px'
+  }
+
+  let d1 = new Drag(div1)
+  let d2 = new Drag(div2)
+
+
+
+</script>
+
+</html>

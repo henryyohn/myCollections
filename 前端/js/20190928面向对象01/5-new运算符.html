@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // new运算符；1.执行函数；2.自动创建一个空对象；  3.把创建的对象指向另外一个对象；
+    // 4.把空对象和函数里的this 衔接起来；(this指向实例化对象) 5.隐式返还this；
+
+    // function test(){
+    //     console.log("test..");
+    // }
+    // test();
+    // new test();
+    //简化工厂模式；---->构造函数；
+    // 1.约定俗成：首字符大写；
+    // 2.属性放在构造函数；方法放在原型；
+    // let Tab = {}
+    function Tab() {
+        // let obj = {};--->this;
+        this.name = "张三";
+        // this.hobby = function(){
+        //     console.log("篮球");
+        // }
+        // return obj;
+    }
+    Tab.prototype.psFor = function () {
+        console.log("psFor...");
+    }
+    Tab.prototype.hobby = function () {
+        console.log("hobby...", this.name);
+    }
+
+
+    function Dog(name) {
+        this.name = name
+        this.color = 'reb'
+        this.eat = function () { alert("吃便便"); };
+    }
+    Dog.prototype.specials = '犬科'
+    // Dog.prototype = {specials: '犬科'}
+    let dogA = new Dog('dog9999')
+    // console.log('==77==',dogA)
+    // console.log('==77-1==',dogA.constructor)
+    // console.log('==88==',dogA.__proto__)
+    // console.log('==99==',Dog.prototype)
+
+    // for(var prop in dogA) { alert("dogA["+prop+"]="+dogA[prop]); }
+    //每个原型上都有一个预定义属性； constructor---》构造函数；
+    // 覆盖原本 constructor属性；
+    // Tab.prototype = {
+    //     constructor:Tab,
+    //     psFor(){
+    //         console.log("psFor...");
+    //     },
+    //     hobby(){
+    //         console.log("hobby...",this.name);
+    //     }
+    // }
+
+
+    // let str = "1212fdsf";
+    // // let str = new String("fdsfdsa");
+    // if(str.constructor===String){
+    //     console.log("字符串")
+    // }else{
+    //     console.log("不是");
+    // }
+
+
+
+    // Tab();
+    // let tab1 = new Tab();
+    // console.log(tab1.constructor===Tab);
+
+    // console.log(tab1.__proto__===Tab.prototype); 
+    // console.log(tab1.name);
+    // // console.log();
+    // tab1.hobby();
+    // let tab2 = new Tab("张三","lisi");
+    // // console.log(tab1.psFor===tab2.psFor);
+    // tab2.hobby();
+
+    //仿写new 运算符；
+    function myNew(constructor, ...arg) {
+        let obj = {};
+        constructor.call(obj, ...arg);
+        obj.__proto__ = constructor.prototype;
+        return obj;
+    }
+
+    let tab1 = myNew(Tab);
+    // console.log(tab1.name)
+    tab1.psFor();
+
+
+    function Animal() {
+
+        this.species = "动物";
+
+    }
+
+
+
+    function Cat(name, color) {
+
+        this.name = name;
+
+        this.color = color;
+
+    }
+
+
+    function fun(n) {
+        console.log('==1==', n)
+        return {
+            func: function (m, n) {
+                console.log('==2==', m + n)
+                return fun(m + n)
+            }
+        }
+    }
+
+    // let a = fun()
+
+    // a.func(1)
+    // a.func(2)
+    // a.func(2)
+    // a.func(3)
+
+
+    // let b = fun(0).func(1).func(2).func(3)
+
+    (function () {
+        // let a = [2,3,4,7,8];
+        let a = {
+            name: '0000',
+            sex: '9999',
+            age: 20
+        };
+        for (let key in a) {
+            console.log(key)
+        }
+    })()
+
+    // 深拷贝
+    function deepcopy(obj) {
+        console.log(typeof obj)
+        if (typeof obj !== 'object') return obj
+        let result = Array.isArray(obj) ? [] : {}
+        for (let key in obj) {
+            console.log('-0-',key)
+            if (obj.hasOwnProperty(key)) {
+                if (typeof obj[key] === 'object') {
+                    result[key] = deepcopy(obj[key])
+                } else {
+                    result[key] = obj[key]
+                }
+            }
+        }
+        return result
+    }
+
+    let na = {
+        name: '0000',
+        sex: '9999',
+        age: 20
+    };
+
+    let newna = deepcopy()
+    console.log(na)
+    console.log(newna)
+
+    // 实现new, 生成新对象，绑定this，
+    function theNew(constructor, ...arg) {
+        let obj = {}
+        constructor.call(obj, ...arg)
+        obj.__proto__ = constructor.prototype
+        return obj
+    }
+
+
+
+</script>
+
+</html>
